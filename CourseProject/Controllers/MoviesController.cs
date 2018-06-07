@@ -14,20 +14,22 @@ namespace CourseProject.Controllers
 {
     public class MoviesController : Controller
     { 
+
        //private readonly UnitOfWork UnitOW;
 
        // private CourseProjectDbContext db = new CourseProjectDbContext();
 
-       // public MoviesController()
-       // {
-       //     this.UnitOW = new UnitOfWork(new CourseProjectDbContext());
-       // }
+      // // public MoviesController()
+      // // {
+      // //     this.UnitOW = new UnitOfWork(new CourseProjectDbContext());
+      // // }
 
        // public MoviesController(CourseProjectDbContext context)
        // {
        //     UnitOW = new UnitOfWork(context);
        // }
 
+       // -------------------------------------------------
        // // GET: Movies/Details/5
        // [HttpGet]
        // public ActionResult Details(int? id)
@@ -43,6 +45,8 @@ namespace CourseProject.Controllers
        //     }
        //     return View(movies);
        // }
+       // -------------------- или ------------------------
+       
 
        // // GET: Movies
        // [HttpGet]

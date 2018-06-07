@@ -53,21 +53,25 @@ namespace CourseProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogIn(string username, string password)
+        public ActionResult Login(string username, string password)
         {
             using (CourseProjectDbContext db = new CourseProjectDbContext())
             {
                 //User user = db.User.Where(d => d.UserName == userModel.UserName && d.Password == userModel.Password).Single();
-                try
-                {
-                    var userDetails = db.User.Where(d => d.UserName.Equals(username) && d.Password.Equals(password)).Single();
-                    Session["ID"] = userDetails.UserId;
-                }
-                catch
-                {
-                    ModelState.AddModelError("", "Wrong credentials!");
-                    return View("Index");
-                }
+                if (ModelState.IsValid)
+                    {
+                        try
+                    {
+                      var userDetails = db.User.Where(d => d.UserName.Equals(username) && d.Password.Equals(password)).Single();
+                      Session["ID"] = userDetails.UserId.ToString();
+                      Session["UserName"] = userDetails.UserName.ToString();
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("", "Wrong credentials!");
+                        return View("Index");
+                    }
+                    }
             }
             return RedirectToAction("Index", "Home");
         }
