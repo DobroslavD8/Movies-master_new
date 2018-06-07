@@ -8,7 +8,7 @@
     using System.Linq;
 
 
-    public class RepositoryBase<T> : IRepositoryBase<T>
+    public class RepositoryBase<T> // : IRepositoryBase<T>
         where T : class
     {
         protected CourseProjectDbContext Context;
@@ -22,7 +22,7 @@
         }
 
         public RepositoryBase() =>
-            // this constructor is automatically invoked when the default child constructor is called
+            // ctor is automatically invoked when the default child constructor is called
             Context = new CourseProjectDbContext();
 
         public RepositoryBase(CourseProjectDbContext ctx)
@@ -39,9 +39,7 @@
         }
         public void Update(T item, Func<T, bool> findByIDPredecate)
         {
-            var local = Context.Set<T>()
-                         .Local
-                         .FirstOrDefault(findByIDPredecate);// (f => f.ID == item.ID);
+            var local = Context.Set<T>().Local.FirstOrDefault(findByIDPredecate);
             if (local != null)
             {
                 Context.Entry(local).State = EntityState.Detached;

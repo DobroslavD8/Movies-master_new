@@ -15,6 +15,7 @@ namespace CourseProject.Models
         public int GenreID { get; set; } 
         public virtual Genre Genre { get; set;  }
 
+
         [Required]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Field {1} must be between 5 and 30 characters!")]
         public string Name { get; set; }

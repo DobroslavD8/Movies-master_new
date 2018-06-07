@@ -17,116 +17,88 @@ namespace CourseProject.Controllers
 
         private readonly UnitOfWork UnitOW;
 
-        private CourseProjectDbContext db = new CourseProjectDbContext();
 
-        // public MoviesController()
-        // {
-        //     this.UnitOW = new UnitOfWork(new CourseProjectDbContext());
-        // }
+        private CourseProjectDbContext db = new CourseProjectDbContext();
 
         public MoviesController(CourseProjectDbContext context)
         {
             UnitOW = new UnitOfWork(context);
         }
 
-        // -------------------------------------------------
-        // GET: Movies/Details/5
-        //[HttpGet]
-        // Error:
-        //public ActionResult Details(int? id)
+        //public ActionResult Index()
         //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    MovieViewModel movies = db.MoviesViewModel.Find(id);
-        //    if (movies == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(movies);
-        //}
-        
-       
+        //    // Fix cannot convert ------ ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ & create Index view
+        //    IEnumerable<Movies> movies = UnitOW.Repository.GetAll();
 
-        // GET: Movies
+        //    List<MovieViewModel> model = new List<MovieViewModel>();
+        //    foreach (Movies movie in movies)
+        //    {
+        //        MovieViewModel movieModel = new MovieViewModel(movie);
+        //        model.Add(movieModel);
+        //    }
+
+        //    return View(model);
+        //}
+        //-------------------------------------------------------------------
         //[HttpGet]
         //public ActionResult Index()
         //{
 
-        //    var movies = db.Movies;
-        //    return View(movies.ToList());
+        //    IEnumerable<Movies> movies = UnitOW.MoviesRepository.GetAll();
 
-            
-            //IEnumerable<Movies> movies = UnitOW.MoviesRepository.GetAll();
-
-            //List<Movies> model = new List<Movies>();
-            //foreach (Movies movie in Movies)
-            //{
-            //    Movies movie = new Movies(movie);
-            //    model.Add(movie);
-            //}
-            
+        //    List<Movies> model = new List<Movies>();
+        //    foreach (Movies movie in Movies)
+        //    {
+        //        Movies movie = new Movies(movie);
+        //        model.Add(movie);
+        //    }
         //}
+        //-------------------------------------------------------------------
 
-        // GET: Cities/Create
-        //[HttpGet]
-        //public ActionResult Create()
+        //public ActionResult Details()
         //{
         //    return View();
         //}
 
-        // POST: Movies/Create
-        //[HttpPost]
-        //public ActionResult Create(Movies movie)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            db.Movies.Add(movie);
-        //            db.SaveChanges();
-        //            return RedirectToAction("Index");
-        //        }
-        //    }
-        //    catch (DataException)
-        //    {
-        //        ModelState.AddModelError("", "Can't save changes...");
-        //    }
-        //    return View(movie);
-        //}
-
-        // GET: Movies/Edit/5
-        //[HttpGet]
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        // POST: Movies/Edit/5
-        //[HttpPost]
-        //public ActionResult Edit(int id, FormCollection collection)
+        //public ActionResult Details(int? id)
         //{
         //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
+        //           {
+        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //           }
+        //        Movies movie = UnitOW.MoviesRepository.GetByID(id);
+        //    MovieViewModel model = new MovieViewModel(movie);
 
-        //    var newMovie = db.Movies.Find(id);
-        //    if (TryUpdateModel(newMovie, "",
-        //       new string[] { "GenreID", "Name", "PremiereDate", "Duration", "Price" }))
-        //    {
-        //        try
-        //        {
-        //            db.SaveChanges();
-        //            return RedirectToAction("Index");
-        //        }
-        //        catch (DataException)
-        //        {
-        //            ModelState.AddModelError("", "Unable to save changes...");
-        //        }
-        //    }
-        //    return View(newMovie);
+        //    return View(model);
+        //}
+
+        //[HttpGet]
+        // public ActionResult Create()
+        // {
+        //     return View();
+        // }
+
+        // public ActionResult Create([Bind(Include = "ID,GenreID,Genre,Name,PremiereDate,Duration,Price")] MovieViewModel movieViewModel)
+        // {
+        //         try
+        //         {
+        //             Movies movie = new Movies();
+
+        //             UnitOW.MovieRepository.Add(movie);
+        //             UnitOW.MovieRepository.Saved();
+        //         }
+        //         catch
+        //         {
+        //             ModelState.AddModelError("", "Database error! Unable to save changes. Try again later!");
+        //         }
+        //         return View(movieViewModel);
+        //     }
+        // }
+
+        //[HttpPost]
+        //public ActionResult Edit(int? id)
+        //{
+        //    
         //}
 
         // GET: Movies/Delete/5
@@ -147,35 +119,15 @@ namespace CourseProject.Controllers
         //    return View(movie);
         //}
 
-        // POST: Movies/Delete/5
         //[HttpPost]
         //public ActionResult Delete(int id)
         //{
-            // #1 
-            /* Movies movie = RepositoryBase.GetByID(id);
+        //    Movies movie = RepositoryBase.GetByID(id);
 
-            if (movie == null)
-                return View("NotFound");
-            else
-                return View(movie); */
-
-            // #2
-
-            //Movies movie = db.MoviesViewModel.Find(id);
-            //db.MoviesViewModel.Remove(movie);
-            //db.SaveChanges();
-
-            //return RedirectToAction("Index");
+        //    if (movie == null)
+        //        return View("NotFound");
+        //    else
+        //        return View(movie); 
         //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-
-        //    base.Dispose(disposing);
         //}
-    } 
 } 

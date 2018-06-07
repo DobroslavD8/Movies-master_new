@@ -63,28 +63,21 @@ namespace CourseProject.Controllers
         public ActionResult Register(RegisterViewModel viewModel)
         {
 
-            if (string.IsNullOrEmpty(viewModel.FirstName) == false)
-            {
-                char firstLetter = viewModel.FirstName[0];
-                if (char.IsUpper(firstLetter) == false)
-                {
-                    ModelState.AddModelError("FirstName", "The first letter should be a capital!");
-                }
-            }
-
-            if (string.IsNullOrEmpty(viewModel.LastName) == false)
-            {
-                char firstLetter = viewModel.LastName[0];
-                if (char.IsUpper(firstLetter) == false)
-                {
-                    ModelState.AddModelError("LastName", "The first letter should be a capital!");
-                }
-            }
-
             if (ModelState.IsValid)
             {
+                User user = new User
+                {
+                    UserId = viewModel.UserId,
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    UserName = viewModel.UserName,
+                    Address = viewModel.Address,
+                    Mail = viewModel.Mail,
+                    PhoneNumber = viewModel.PhoneNumber
+                };
+                //uow.GetUserRepository.Registration(user);
                 uow.GetUserRepository.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "User");
 
             }
             else
@@ -93,9 +86,9 @@ namespace CourseProject.Controllers
             }
         }
 
-    // private static UserViewModel UserViewModel = new UserViewModel(); //Without this: An object reference is required for the non-static
-                                                                         //With: Cannot implicitly convert type "ProjectDB.Entities.User"
-                                                                         //-------------------------------- to  "CourseProject.Models.User"
+        //private static UserViewModel UserViewModel = new UserViewModel(); //Without this: An object reference is required for the non-static
+        //With: Cannot implicitly convert type "ProjectDB.Entities.User"
+        //-------------------------------- to  "CourseProject.Models.User"
         //[HttpPost]
         //public ActionResult Login(string username, string password)
         //{
@@ -103,23 +96,63 @@ namespace CourseProject.Controllers
         //    {
         //        User user = db.User.Where(d => d.UserName == UserViewModel.UserName && d.Password == UserViewModel.Password).Single();
         //        if (ModelState.IsValid)
-        //                {
-        //                try
-        //                    {
-        //                         var userDetails = db.User.Where(d => d.UserName.Equals(username) && d.Password.Equals(password)).Single();
-        //                         Session["UserName"] = userDetails.UserName.ToString();
-        //                         Session["Password"] = userDetails.Password.ToString();
-        //                    }
-        //                catch
-        //                    {
-        //                      ModelState.AddModelError("", "Wrong credentials!");
-        //                      return View("Index");
-        //                    }
-        //                }
+        //        {
+        //            try
+        //            {
+        //                var userDetails = db.User.Where(d => d.UserName.Equals(username) && d.Password.Equals(password)).Single();
+        //                Session["UserName"] = userDetails.UserName.ToString();
+        //                Session["Password"] = userDetails.Password.ToString();
+        //            }
+        //            catch
+        //            {
+        //                ModelState.AddModelError("", "Wrong credentials!");
+        //                return View("Index");
+        //            }
+        //        }
         //    }
         //    return RedirectToAction("Index", "Home");
         //}
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            using (CourseProjectDbContext db = new CourseProjectDbContext())
+            {
+                var usr = db.Users.Single(u => u.UserName == user.UserName && u.Password == user.Password);
+                if (usr != null)
+                    {
+                        Session["UserId"] = usr.UserId.ToString();
+                        Session["UserName"] = usr.UserName.ToString();
+                        return RedirectToAction("LoggedIn");
+                    }
+                else
+                    {
+                        ModelState.AddModelError("", "Username or password is incorrect.");
+                    }
+                }
+            return View();
+            }
+           
+        public ActionResult LoggedIn()
+        {
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        }
+
+        // Generated code "public System.Data.Entity.DbSet<CourseProject.Models.RegisterViewModel> RegisterViewModels { get; set; }" in CourseProjectDbContext
         // ===================================================================================================================
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    }
+
 }
