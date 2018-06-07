@@ -14,5 +14,9 @@ namespace ProjectDB
         public DbSet<Cinema> Cinema { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Movies> Movies { get; set; }
+
+        public System.Data.Entity.DbSet<CourseProject.Models.User> Users { get; set; }
+
+        // public System.Data.Entity.DbSet<CourseProject.Models.RegisterViewModel> RegisterViewModels { get; set; }
     }
 }

@@ -40,6 +40,8 @@ namespace CourseProject.Models
 
         [Required(ErrorMessage = "Password is required.")]
         [StringLength(50, ErrorMessage = "Field {1} must be between 10 and 50 characters!", MinimumLength = 10)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+
     }
 }

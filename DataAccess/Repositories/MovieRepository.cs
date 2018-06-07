@@ -20,10 +20,10 @@ namespace DataAccess.Repositories
             this.ctx = ctx;
         }
 
-        public Movies GetById(int? id)
-        {
-            return ctx.Movies.Find(id);
-        }
+        // public Movies GetById(int? id)
+        //{
+        //    return ctx.MoviesViewModel.Find(id);
+        //}
 
         public User GetByName(string Name)
         {
@@ -40,14 +40,15 @@ namespace DataAccess.Repositories
             ctx.SaveChanges();
         }
 
-        public void DeleteByID(int id)
-        {
-            Movies movie = ctx.Movies.Find(id);
-            if (movie != null)
-            {
-                ctx.Movies.Remove(movie);
-                ctx.SaveChanges();
-            }
-        }
+        // Error:
+        //public void DeleteByID(int id)
+        //{
+        //    Movies movie = ctx.MoviesViewModel.Find(id);
+        //    if (movie != null)
+        //    {
+        //        ctx.MoviesViewModel.Remove(movie);
+        //        ctx.SaveChanges();
+        //    }
+        //}
     }
 }

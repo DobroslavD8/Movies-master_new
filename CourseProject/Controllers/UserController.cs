@@ -23,58 +23,103 @@ namespace CourseProject.Controllers
             uow = new UnitOfWork(context);
         }
 
-        // GET: User
-        public ActionResult Registration()
+
+        // --------------------------------------------- #2 --------------------------------------------- //
+        //// GET: User
+        //public ActionResult Registration()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Registration([Bind(Include = "UserId, FirstName, LastName, UserName, Password, Mail, PhoneNumber")] ProjectDB.Entities.User userModel)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+        //       ProjectDB.Entities.User user = new ProjectDB.Entities.User()
+        //        {
+        //            UserId = userModel.UserId,
+        //            FirstName = userModel.FirstName,
+        //            LastName = userModel.LastName,
+        //            UserName = userModel.UserName,
+        //            Password = userModel.Password,
+        //            Mail = userModel.Mail,
+        //            PhoneNumber = userModel.PhoneNumber
+        //        };
+
+        //        uow.GetUserRepository.Registration(userModel);
+        //        uow.GetUserRepository.Save();
+        //    }
+        //    return View(userModel);
+        //}
+
+        public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Registration([Bind(Include = "UserId, FirstName, LastName, UserName, Password, Mail, PhoneNumber")] ProjectDB.Entities.User userModel)
+        public ActionResult Register(RegisterViewModel viewModel)
         {
-            if(ModelState.IsValid)
+
+            if (string.IsNullOrEmpty(viewModel.FirstName) == false)
             {
-               ProjectDB.Entities.User user = new ProjectDB.Entities.User()
+                char firstLetter = viewModel.FirstName[0];
+                if (char.IsUpper(firstLetter) == false)
                 {
-                    UserId = userModel.UserId,
-                    FirstName = userModel.FirstName,
-                    LastName = userModel.LastName,
-                    UserName = userModel.UserName,
-                    Password = userModel.Password,
-                    Mail = userModel.Mail,
-                    PhoneNumber = userModel.PhoneNumber
-                };
-
-                uow.GetUserRepository.Registration(userModel);
-                uow.GetUserRepository.Save();
+                    ModelState.AddModelError("FirstName", "The first letter should be a capital!");
+                }
             }
-            return View(userModel);
-        }
 
-        [HttpPost]
-        public ActionResult Login(string username, string password)
-        {
-            using (CourseProjectDbContext db = new CourseProjectDbContext())
+            if (string.IsNullOrEmpty(viewModel.LastName) == false)
             {
-                //User user = db.User.Where(d => d.UserName == userModel.UserName && d.Password == userModel.Password).Single();
-                if (ModelState.IsValid)
-                    {
-                        try
-                    {
-                      var userDetails = db.User.Where(d => d.UserName.Equals(username) && d.Password.Equals(password)).Single();
-                      Session["ID"] = userDetails.UserId.ToString();
-                      Session["UserName"] = userDetails.UserName.ToString();
-                    }
-                    catch
-                    {
-                        ModelState.AddModelError("", "Wrong credentials!");
-                        return View("Index");
-                    }
-                    }
+                char firstLetter = viewModel.LastName[0];
+                if (char.IsUpper(firstLetter) == false)
+                {
+                    ModelState.AddModelError("LastName", "The first letter should be a capital!");
+                }
             }
-            return RedirectToAction("Index", "Home");
+
+            if (ModelState.IsValid)
+            {
+                uow.GetUserRepository.Save();
+                return RedirectToAction("Index");
+
+            }
+            else
+            {
+                return View();
+            }
         }
 
+    // private static UserViewModel UserViewModel = new UserViewModel(); //Without this: An object reference is required for the non-static
+                                                                         //With: Cannot implicitly convert type "ProjectDB.Entities.User"
+                                                                         //-------------------------------- to  "CourseProject.Models.User"
+        //[HttpPost]
+        //public ActionResult Login(string username, string password)
+        //{
+        //    using (CourseProjectDbContext db = new CourseProjectDbContext())
+        //    {
+        //        User user = db.User.Where(d => d.UserName == UserViewModel.UserName && d.Password == UserViewModel.Password).Single();
+        //        if (ModelState.IsValid)
+        //                {
+        //                try
+        //                    {
+        //                         var userDetails = db.User.Where(d => d.UserName.Equals(username) && d.Password.Equals(password)).Single();
+        //                         Session["UserName"] = userDetails.UserName.ToString();
+        //                         Session["Password"] = userDetails.Password.ToString();
+        //                    }
+        //                catch
+        //                    {
+        //                      ModelState.AddModelError("", "Wrong credentials!");
+        //                      return View("Index");
+        //                    }
+        //                }
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
+        // ===================================================================================================================
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     }
 }

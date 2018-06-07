@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace CourseProject.Models
 {
-    public class User
+    public class RegisterViewModel
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -43,6 +42,5 @@ namespace CourseProject.Models
         [StringLength(50, ErrorMessage = "Password must be between 10 and 50 characters!", MinimumLength = 10)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
     }
 }
